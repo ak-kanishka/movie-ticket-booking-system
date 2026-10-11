@@ -1,0 +1,10 @@
+com\movieticket\AppTest.class
+com\movieticket\service\BookingPaymentIntegrationTest.class
+com\movieticket\service\BookingServiceTest.class
+com\movieticket\service\MovieTicketBookingSystemTest.class
+com\movieticket\service\DuplicateSeatBookingTest.class
+com\movieticket\service\PaymentServiceTest.class
+com\movieticket\service\UserServiceTest.class
+com\movieticket\service\BookingDecisionTableTest.class
+com\movieticket\service\MovieServiceTest.class
+com\movieticket\service\BookingStateTransitionTest.class

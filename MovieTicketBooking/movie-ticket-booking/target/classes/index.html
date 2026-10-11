@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Movie Ticket Booking</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .section {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        button {
+            cursor: pointer;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .seats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .seat {
+            padding: 12px;
+            background: #ddd;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .seat.selected {
+            background: #777;
+            color: white;
+        }
+
+        .seat.booked {
+            background: #aaa;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        #message {
+            margin-top: 20px;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎬 Movie Ticket Booking</h1>
+
+    <!-- LOGIN -->
+    <div class="section">
+
+        <h2>Login</h2>
+
+        <input
+                type="email"
+                id="email"
+                placeholder="Email">
+
+        <input
+                type="password"
+                id="password"
+                placeholder="Password">
+
+        <button onclick="login()">
+            Login
+        </button>
+
+    </div>
+
+
+    <!-- MOVIE -->
+    <div class="section">
+
+        <h2>Movie Selection</h2>
+
+        <select id="movie">
+
+            <option value="Interstellar">
+                Interstellar
+            </option>
+
+            <option value="Avatar">
+                Avatar
+            </option>
+
+            <option value="Inception">
+                Inception
+            </option>
+
+        </select>
+
+        <select id="show">
+
+            <option value="6:30 PM">
+                6:30 PM
+            </option>
+
+            <option value="9:30 PM">
+                9:30 PM
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- SEATS -->
+    <div class="section">
+
+        <h2>Select Seats</h2>
+
+        <div class="seats">
+
+            <div class="seat" onclick="selectSeat(this)">
+                A1
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                A2
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                A3
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                A4
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                B1
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                B2
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                B3
+            </div>
+
+            <div class="seat" onclick="selectSeat(this)">
+                B4
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+    <div class="section">
+
+        <h2>Payment</h2>
+
+        <p>
+            Ticket Price: ₹250 per seat
+        </p>
+
+        <p>
+            Total:
+            ₹<span id="total">0</span>
+        </p>
+
+        <button onclick="bookTicket()">
+            Pay & Book
+        </button>
+
+    </div>
+
+
+    <div id="message"></div>
+
+</div>
+
+
+<script>
+
+    let selectedSeats = [];
+
+    const ticketPrice = 250;
+
+
+    function login() {
+
+        const email =
+            document.getElementById("email").value;
+
+        const password =
+            document.getElementById("password").value;
+
+        const message =
+            document.getElementById("message");
+
+        if (email === "" || password === "") {
+
+            message.innerText =
+                "Login failed: Required fields cannot be empty.";
+
+            return;
+        }
+
+        message.innerText =
+            "Login successful!";
+    }
+
+
+    function selectSeat(element) {
+
+        if (element.classList.contains("booked")) {
+            return;
+        }
+
+        const seatNumber =
+            element.innerText;
+
+        if (element.classList.contains("selected")) {
+
+            element.classList.remove("selected");
+
+            selectedSeats =
+                selectedSeats.filter(
+                    seat => seat !== seatNumber
+                );
+
+        } else {
+
+            element.classList.add("selected");
+
+            selectedSeats.push(seatNumber);
+        }
+
+        updateTotal();
+    }
+
+
+    function updateTotal() {
+
+        const total =
+            selectedSeats.length * ticketPrice;
+
+        document.getElementById("total")
+            .innerText = total;
+    }
+
+
+    function bookTicket() {
+
+        const message =
+            document.getElementById("message");
+
+        if (selectedSeats.length === 0) {
+
+            message.innerText =
+                "Booking failed: Please select at least one seat.";
+
+            return;
+        }
+
+        message.innerText =
+            "Payment successful! Booking confirmed for seats: "
+            + selectedSeats.join(", ");
+
+        selectedSeats.forEach(seatNumber => {
+
+            const seats =
+                document.querySelectorAll(".seat");
+
+            seats.forEach(seat => {
+
+                if (seat.innerText === seatNumber) {
+
+                    seat.classList.remove("selected");
+                    seat.classList.add("booked");
+
+                }
+
+            });
+
+        });
+
+        selectedSeats = [];
+
+        updateTotal();
+    }
+
+</script>
+
+</body>
+</html>

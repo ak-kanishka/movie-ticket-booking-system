@@ -1,0 +1,11 @@
+com\movieticket\model\Seat.class
+com\movieticket\service\BookingService.class
+com\movieticket\model\Booking.class
+com\movieticket\App.class
+com\movieticket\model\User.class
+com\movieticket\service\MovieService.class
+com\movieticket\model\Show.class
+com\movieticket\service\PaymentService.class
+com\movieticket\service\UserService.class
+com\movieticket\model\Movie.class
+com\movieticket\model\Theatre.class
